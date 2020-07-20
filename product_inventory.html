@@ -1,6 +1,6 @@
-<!-- Invoices Table -->
-<H1>Invoices</H1>
-<h4>Displays customer invoices</h4>
+<!-- Product Inventory Table -->
+<H1>Product Inventory</H1>
+<h4>This is what products we have available</h4>
 
 <!-- Headers and references to those pages -->
 <ul>
@@ -16,61 +16,72 @@
 
 <!-- Table to display invoice information -->
 <div>
-    <legend><H2>Customer Invoices</H2></legend>
+    <legend><H2>Available Inventory</H2></legend>
+
+    <!-- Search bar to look by type-->
+    <form class="drop_down">
+        <label for="billDate">Filter Bikes By Type:</label><br>
+         <select name="type_filter">
+           <optgroup label="Product Type">
+                <option value="All">All</option>
+                 <option value="Road">Road</option>
+                 <option value="Mountain">Mountain</option>
+                 <option value="Electric">Electric</option>
+           </optgroup>
+         </select><br>
+       <input type="submit" value="Submit">
+    </form>
+
     <table class="table">
         <thead>
-            <th hidden>customer_id</th>
-            <th>invoice_id</th>
-            <th>employee_id</th>
-            <th>payment_date_year</th>
-            <th>payment_date_month</th>
-            <th>payment_date_dayOfMonth</th>
-            <th>payment_amount</th>
-            <th>payment_method</th>
-            <th>invoice_amount</th>
-            <th>modify invoice</th>
-            <th>delete invoice</th>
+            <th>product_serial_number</th>
+            <th>product_type</th>
+            <th>product_brand</th>
+            <th>product_year</th>
+            <th>product_model</th>
+            <th>product_invoice_price</th>
+            <th>product_retail_price</th>
+            <th>product_size</th>
+            <th>modify product</th>
+            <th>delete product</th>
         </thead>
 
 <tbody>             
     <tr>
-        <td hidden>1</td>
-        <td>1</td>
-        <td>1</td>
+        <td>1234</td>
+        <td>Road</td>
+        <td>Schwinn</td>
         <td>2020</td>
-        <td>2</td>
-        <td>15</td>
-        <td>500</td>
-        <td>Credit Card</td>
-        <td>500</td>
-        <td><button type="button"> Modify </button></td>
-        <td><button type="button"> Delete </button></td>
-    </tr>
-
-    <tr>
-        <td hidden>2</td>
-        <td>2</td>
-        <td>1</td>
-        <td>2020</td>
-        <td>3</td>
-        <td>15</td>
+        <td>NULL</td>
         <td>1000</td>
-        <td>Credit Card</td>
-        <td>1700</td>
+        <td>1100</td>
+        <td>21</td>
         <td><button type="button"> Modify </button></td>
         <td><button type="button"> Delete </button></td>
     </tr>
 
     <tr>
-        <td hidden>3</td>
-        <td>2</td>
-        <td>1</td>
+        <td>1010</td>
+        <td>Mountain</td>
+        <td>Santa Cruz</td>
         <td>2020</td>
-        <td>3</td>
-        <td>15</td>
-        <td>700</td>
-        <td>Credit Card</td>
-        <td>1700</td>
+        <td>Chameleon</td>
+        <td>3500</td>
+        <td>3299</td>
+        <td>27.5</td>
+        <td><button type="button"> Modify </button></td>
+        <td><button type="button"> Delete </button></td>
+    </tr>
+
+    <tr>
+        <td>2345</td>
+        <td>Electric</td>
+        <td>RadRunner</td>
+        <td>2020</td>
+        <td>NULL</td>
+        <td>1200</td>
+        <td>1199</td>
+        <td>25</td>
         <td><button type="button"> Modify </button></td>
         <td><button type="button"> Delete </button></td>
     </tr>
@@ -83,36 +94,36 @@
 <!-- Form to submit invoice information -->
 <form>
     <fieldset>
-        <legend>New Invoice Information:</legend>
-        <label>Invoice ID:
+        <legend>New Product Information:</legend>
+        <label>Product Serial Number:
             <input type="number" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Employee ID:
+        <label>Product Type:
             <input type="number" name="employee_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Payment Date Year:
+        <label>Product Brand:
             <input type="number" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Payment Date Month:
+        <label>Product Year:
             <input type="number" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Payment Date Day:
+        <label>Product Model:
             <input type="number" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Payment Amount:
+        <label>Product Invoice Price:
             <input type="number" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Payment Method:
+        <label>Product Retail Price:
             <input type="text" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
-        <label>Invoice Amount:
+        <label>Product Size:
             <input type="number" name="invoice_id" size="30" maxlength="100">
         </label>
         <br>
@@ -169,6 +180,10 @@ li a {
 li a:hover {
   background-color: #4682B4;
   color: white;
+}
+
+.drop_down{
+    width: 12.5%;
 }
 
 .table{

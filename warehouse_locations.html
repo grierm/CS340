@@ -1,6 +1,6 @@
-<!-- Invoices Table -->
-<H1>Invoices</H1>
-<h4>Displays customer invoices</h4>
+<!-- Warehouse Locations Table -->
+<H1>Warehouse Locations</H1>
+<h4>Choose one of your favorite locations</h4>
 
 <!-- Headers and references to those pages -->
 <ul>
@@ -16,61 +16,45 @@
 
 <!-- Table to display invoice information -->
 <div>
-    <legend><H2>Customer Invoices</H2></legend>
+    <legend><H2>Warehouse Locations</H2></legend>
     <table class="table">
         <thead>
-            <th hidden>customer_id</th>
-            <th>invoice_id</th>
-            <th>employee_id</th>
-            <th>payment_date_year</th>
-            <th>payment_date_month</th>
-            <th>payment_date_dayOfMonth</th>
-            <th>payment_amount</th>
-            <th>payment_method</th>
-            <th>invoice_amount</th>
-            <th>modify invoice</th>
-            <th>delete invoice</th>
+            <th>location_id</th>
+            <th>location_street_address</th>
+            <th>location_city</th>
+            <th>location_state</th>
+            <th>location_zip</th>
+            <th>modify address</th>
+            <th>delete address</th>
         </thead>
 
 <tbody>             
     <tr>
-        <td hidden>1</td>
         <td>1</td>
-        <td>1</td>
-        <td>2020</td>
-        <td>2</td>
-        <td>15</td>
-        <td>500</td>
-        <td>Credit Card</td>
-        <td>500</td>
+        <td>123 N Mississippi Ave</td>
+        <td>Portland</td>
+        <td>OR</td>
+        <td>97205</td>
         <td><button type="button"> Modify </button></td>
         <td><button type="button"> Delete </button></td>
     </tr>
 
     <tr>
-        <td hidden>2</td>
         <td>2</td>
-        <td>1</td>
-        <td>2020</td>
-        <td>3</td>
-        <td>15</td>
-        <td>1000</td>
-        <td>Credit Card</td>
-        <td>1700</td>
+        <td>4567 Howard St</td>
+        <td>San Francisco</td>
+        <td>CA</td>
+        <td>94103</td>
         <td><button type="button"> Modify </button></td>
         <td><button type="button"> Delete </button></td>
     </tr>
 
     <tr>
-        <td hidden>3</td>
-        <td>2</td>
-        <td>1</td>
-        <td>2020</td>
         <td>3</td>
-        <td>15</td>
-        <td>700</td>
-        <td>Credit Card</td>
-        <td>1700</td>
+        <td>1221 24th Ave E</td>
+        <td>Seattle</td>
+        <td>WA</td>
+        <td>98112</td>
         <td><button type="button"> Modify </button></td>
         <td><button type="button"> Delete </button></td>
     </tr>
