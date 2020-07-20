@@ -1,0 +1,208 @@
+<!-- Customers Table -->
+<H1>Customers</H1>
+<h4>Displays customer information</h4>
+
+<!-- Headers and references to those pages -->
+<ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="customers.html">Customers</a></li>
+	<li><a href="Invoices.html">Invoices</a></li>
+    <li><a href="orders.html">Orders</a></li>
+	<li><a href="product_inventory.html">Product Inventory</a></li>
+    <li><a href="warehouse_inventory.html">Warehouse Inventory</a></li>
+    <li><a href="warehouse_locations.html">Warehouse Locations</a></li>
+	<li><a href="employees.html">Employees</a></li>
+</ul>	
+
+<!-- Table to display invoice information -->
+<div>
+    <legend><H2>Customers</H2></legend>
+    <table class="table">
+        <thead>
+            <th hidden>customer_id</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>email</th>
+            <th>phone_number</th>
+            <th>employee_ID</th>
+            <th>gender</th>
+            <th>address_street</th>
+            <th>address_city</th>
+            <th>address_state</th>
+            <th>address_ZIP</th>
+            <th>credit_card_type</th>
+            <th>credit_card_number</th>
+            <th>cc_expiration_month</th>
+            <th>cc_expiration_year</th>
+            <th>cc_CVV_code</th>
+            <th>billing_address_street</th>
+            <th>billing_address_city</th>
+            <th>billing_address_state</th>
+            <th>billing_address_ZIP</th>
+            <th>modify customer</th>
+            <th>delete customer</th>
+        </thead>
+
+<tbody>             
+    <tr>
+        <td hidden>1</td>
+        <td>Holden</td>
+        <td>Caulfield</td>
+        <td>email_fake_123@fake-email.com</td>
+        <td>800-867-5309</td>
+        <td>NULL</td>
+        <td>Male</td>
+        <td>123 Fake Street</td>
+        <td>Fakeville</td>
+        <td>FA</td>
+        <td>99999</td>
+        <td>Visa</td>
+        <td>1234567887654321</td>
+        <td>12</td>
+        <td>2099</td>
+        <td>123</td>
+        <td>123 Fake Street</td>
+        <td>Fakeville</td>
+        <td>FA</td>
+        <td>99999</td>
+        <td><button type="button"> Modify </button></td>
+        <td><button type="button"> Delete </button></td>
+    </tr>
+
+</tbody>
+</table>
+
+<br></br>
+
+<!-- Form to submit invoice information -->
+<form>
+    <fieldset>
+        <legend>New Customer Information:</legend>
+        <label>First Name:
+            <input type="number" name="first_name" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Last Name:
+            <input type="number" name="last_name" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Email:
+            <input type="number" name="email" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Phone Number:
+            <input type="number" name="phone_number" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Employee ID:
+            <input type="number" name="employee_ID" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Gender:
+            <input type="number" name="gender" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Address Street:
+            <input type="text" name="address_street" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Address City:
+            <input type="number" name="address_city" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Address State:
+            <input type="number" name="address_state" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Address ZIP:
+            <input type="number" name="address_ZIP" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Credit Card Type:
+            <input type="number" name="credit_card_type" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Credit Card Number:
+            <input type="number" name="credit_card_number" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Credit Card Expiration Month:
+            <input type="number" name="cc_expiration_month" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Credit Card Expiration Year:
+            <input type="number" name="cc_expiration_year" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Credit Card CVV Code:
+            <input type="number" name="cc_CVV_code" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Billing Address Street:
+            <input type="number" name="billing_address_street" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Billing Address City:
+            <input type="number" name="billing_address_city" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Billing Address State:
+            <input type="number" name="billing_address_state" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Billing Address ZIP:
+            <input type="number" name="address_city" size="30" maxlength="100">
+        </label>
+        <br>
+        <input type="submit" value="Submit Customer" onclick="submit_customer()"/>
+    </form>
+
+
+<!-- This style seciton could be replaces with a style sheet or something-->
+<style>
+/* General background and table style*/
+body{
+    background-color: #F5F5F5;
+}
+
+table, td, tr, th {
+	border: solid;
+    border-width: 2px;
+}
+form {
+	border: solid;
+    border-width: 2px;
+	width: 100%
+}
+fieldset{
+    border: none;
+}
+
+/* Navigation bar style */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #B0C4DE	;
+  overflow: hidden;
+}
+
+li {
+   float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 10px 37px;
+  text-decoration: none;
+}
+
+/* Hover color*/
+li a:hover {
+  background-color: #4682B4;
+  color: white;
+}
+
+</style>

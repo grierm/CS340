@@ -1,0 +1,104 @@
+<!-- Warehouse Inventory Table -->
+<H1>Warehouse Inventory</H1>
+<h4>Displays warehouse inventory</h4>
+
+<!-- Headers and references to those pages -->
+<ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="customers.html">Customers</a></li>
+	<li><a href="Invoices.html">Invoices</a></li>
+    <li><a href="orders.html">Orders</a></li>
+	<li><a href="product_inventory.html">Product Inventory</a></li>
+    <li><a href="warehouse_inventory.html">Warehouse Inventory</a></li>
+    <li><a href="warehouse_locations.html">Warehouse Locations</a></li>
+	<li><a href="employees.html">Employees</a></li>
+</ul>	
+
+<!-- Table to display warehouse inventory information -->
+<div>
+    <legend><H2>Warehouse Inventory</H2></legend>
+    <table class="table">
+        <thead>
+            <th>location_ID</th>
+            <th>product_serial_number</th>
+            <th>Modify Warehouse Inventory</th>
+            <th>Delete Warehouse Inventory</th>
+        </thead>
+
+<tbody>             
+    <tr>
+        <td>654321</td>
+        <td>123456</td>
+        <td><button type="button"> Modify </button></td>
+        <td><button type="button"> Delete </button></td>
+    </tr>
+
+</tbody>
+</table>
+
+<br></br>
+
+<!-- Form to submit warehouse inventory information -->
+<form>
+    <fieldset>
+        <legend>New Warehouse Inventory Information:</legend>
+        <label>Location ID:
+            <input type="number" name="location_ID" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Serial Number:
+            <input type="number" name="product_serial_number" size="30" maxlength="100">
+        </label>
+        <br>
+        <input type="submit" value="Submit Warehouse Inventory" onclick="submit_warehouse_inventory()"/>
+    </form>
+
+
+<!-- This style seciton could be replaces with a style sheet or something-->
+<style>
+/* General background and table style*/
+body{
+    background-color: #F5F5F5;
+}
+
+table, td, tr, th {
+	border: solid;
+    border-width: 2px;
+}
+form {
+	border: solid;
+    border-width: 2px;
+	width: 100%
+}
+fieldset{
+    border: none;
+}
+
+/* Navigation bar style */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #B0C4DE	;
+  overflow: hidden;
+}
+
+li {
+   float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 10px 37px;
+  text-decoration: none;
+}
+
+/* Hover color*/
+li a:hover {
+  background-color: #4682B4;
+  color: white;
+}
+
+</style>

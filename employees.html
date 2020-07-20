@@ -1,0 +1,158 @@
+<!-- Employees Table -->
+<H1>Employees</H1>
+<h4>Displays employee information</h4>
+
+<!-- Headers and references to those pages -->
+<ul>
+    <li><a href="index.html">Home</a></li>
+    <li><a href="customers.html">Customers</a></li>
+	<li><a href="Invoices.html">Invoices</a></li>
+    <li><a href="orders.html">Orders</a></li>
+	<li><a href="product_inventory.html">Product Inventory</a></li>
+    <li><a href="warehouse_inventory.html">Warehouse Inventory</a></li>
+    <li><a href="warehouse_locations.html">Warehouse Locations</a></li>
+	<li><a href="employees.html">Employees</a></li>
+</ul>	
+
+<!-- Table to display employee information -->
+<div>
+    <legend><H2>Employees</H2></legend>
+    <table class="table">
+        <thead>
+            <th>employee_ID</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>start_date_year</th>
+            <th>start_date_month</th>
+            <th>start_date_dayOfMonth</th>
+            <th>end_date_year</th>
+            <th>end_date_month</th>
+            <th>end_date_dayOfMonth</th>
+            <th>job_title</th>
+            <th>location_ID</th>
+            <th>Modify Employee</th>
+            <th>Delete Employee</th>
+        </thead>
+
+<tbody>             
+    <tr>
+        <td>654321</td>
+        <td>Jerry</td>
+        <td>Rice</td>
+        <td>2000</td>
+        <td>01</td>
+        <td>01</td>
+        <td>NULL</td>
+        <td>NULL</td>
+        <td>NULL</td>
+        <td>Founder</td>
+        <td>123456</td>
+        <td><button type="button"> Modify </button></td>
+        <td><button type="button"> Delete </button></td>
+    </tr>
+
+</tbody>
+</table>
+
+<br></br>
+
+<!-- Form to submit employee information -->
+<form>
+    <fieldset>
+        <legend>New Employee Information:</legend>
+        <label>Employee ID:
+            <input type="number" name="employee_ID" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>First Name:
+            <input type="number" name="first_name" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Last Name:
+            <input type="number" name="last_name" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Start Date Year:
+            <input type="number" name="start_date_year" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Start Date Month:
+            <input type="number" name="start_date_month" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Start Date Day of Month:
+            <input type="number" name="start_date_dayOfMonth" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>End Date Year:
+            <input type="number" name="end_date_year" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>End Date Month:
+            <input type="number" name="end_date_month" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>End Date Day of Month:
+            <input type="number" name="end_date_dayOfMonth" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Job Title:
+            <input type="number" name="job_title" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Location ID:
+            <input type="number" name="location_ID" size="30" maxlength="100">
+        </label>
+        <br>
+        <input type="submit" value="Submit Employee" onclick="submit_employee()"/>
+    </form>
+
+
+<!-- This style seciton could be replaces with a style sheet or something-->
+<style>
+/* General background and table style*/
+body{
+    background-color: #F5F5F5;
+}
+
+table, td, tr, th {
+	border: solid;
+    border-width: 2px;
+}
+form {
+	border: solid;
+    border-width: 2px;
+	width: 100%
+}
+fieldset{
+    border: none;
+}
+
+/* Navigation bar style */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #B0C4DE	;
+  overflow: hidden;
+}
+
+li {
+   float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 10px 37px;
+  text-decoration: none;
+}
+
+/* Hover color*/
+li a:hover {
+  background-color: #4682B4;
+  color: white;
+}
+
+</style>
