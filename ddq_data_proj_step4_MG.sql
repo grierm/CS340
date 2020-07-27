@@ -79,7 +79,7 @@ FROM invoices;
 # Select data - product_inventory
 SELECT * 
 FROM product_inventory
-WHERE product_type=:id_input;
+WHERE product_type=id_input;
 
 
 # Select data - warehouse_locations
@@ -88,11 +88,23 @@ FROM warehouse_locations;
 
 # ----------------------------------------
 # Update data - invocies
-
+UPDATE invocies
+SET customer_ID = customer_ID_input, invoice_ID = invoice_ID_input, employee_ID = employee_ID_input, 
+payment_date_year = payment_date_year_input, payment_date_month = payment_date_month_input, 
+payment_date_dayOfMonth = payment_date_dayOfMonth_input, payment_amount = payment_amount_input, 
+payment_method = payment_method_input, invoice_amount = invoice_amount_input;
 
 
 # Update data - product_inventory
-
+UPDATE product_inventory
+SET product_serial_number = product_serial_number_input, product_type = product_type_input, 
+product_brand = product_brand_input, product_year = product_year_input, 
+product_model = product_model_input, product_invoice_price = product_invoice_price_input, 
+product_retail_price = product_retail_price_input, product_size = product_size_input;
 
 
 # Update data - warehouse_locations
+UPDATE warehouse_locations
+SET location_ID = location_ID_input, location_street_address = location_street_address_input,
+location_city = location_city_input, location_state = location_state_input,
+location_ZIP = location_ZIP_input;
