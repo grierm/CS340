@@ -23,10 +23,17 @@
 --
 -- Table structure for table `castaway bike shop`
 --
-
+SET FOREIGN_KEY_CHECKS=0;
+DROP TABLE IF EXISTS invoices;
+DROP TABLE IF EXISTS product_inventory;
+DROP TABLE IF EXISTS warehouse_locations;
+DROP TABLE IF EXISTS customers;
+DROP TABLE IF EXISTS orders;
+DROP TABLE IF EXISTS warehouse_inventory;
+DROP TABLE IF EXISTS employees;
+SET FOREIGN_KEY_CHECKS=1;
 
 # Create the table for invoices
-DROP TABLE IF EXISTS `invoices`;
 CREATE TABLE `invoices` (
 	`customer_ID` int(11) NOT NULL,
 	`invoice_ID` int(11) NOT NULL,
@@ -42,7 +49,6 @@ CREATE TABLE `invoices` (
 
 
 # Create table for product_inventory
-DROP TABLE IF EXISTS `product_inventory`;
 CREATE TABLE `product_inventory` (
 	`product_serial_number` int(11) NOT NULL,
     `product_type` varchar(255) NOT NULL,
@@ -57,7 +63,6 @@ CREATE TABLE `product_inventory` (
 
 
 # Create table for warehouse_locations
-DROP TABLE IF EXISTS `warehouse_locations`;
 CREATE TABLE `warehouse_locations` (
 	`location_ID` int(11) NOT NULL,
     `location_street_address` varchar(255) NOT NULL,
@@ -70,7 +75,6 @@ CREATE TABLE `warehouse_locations` (
 # -------------- Ben's tables --------
 
 # Create the table for customers
-DROP TABLE IF EXISTS `customers`;
 CREATE TABLE `customers` (
 	`customer_ID` int(11) NOT NULL AUTO_INCREMENT,
 	`first_name` varchar(255) NOT NULL,
@@ -97,7 +101,6 @@ CREATE TABLE `customers` (
 
 
 # Create table for orders
-DROP TABLE IF EXISTS `orders`;
 CREATE TABLE `orders` (
 	`invoice_ID` int(11) NOT NULL,
 	`order_ID` int(11) NOT NULL AUTO_INCREMENT,
@@ -112,7 +115,6 @@ CREATE TABLE `orders` (
 
 
 # Create table for warehouse inventory
-DROP TABLE IF EXISTS `warehouse_inventory`;
 CREATE TABLE `warehouse_inventory` (
 	`location_ID` int(11) NOT NULL,
 	`product_serial_number` int(11) NOT NULL,
@@ -122,7 +124,6 @@ CREATE TABLE `warehouse_inventory` (
 
 
 # Create table for employees
-DROP TABLE IF EXISTS `employees`;
 CREATE TABLE `employees` (
 	`employee_ID` int(11) NOT NULL AUTO_INCREMENT,
 	`first_name` varchar(255) NOT NULL,
@@ -160,61 +161,61 @@ CREATE TABLE `employees` (
 ALTER TABLE invoices
     ADD FOREIGN KEY (customer_ID) 
     REFERENCES customers (customer_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE invoices
     ADD FOREIGN KEY (employee_ID) 
     REFERENCES employees (employee_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE product_inventory
     ADD FOREIGN KEY (product_serial_number)
     REFERENCES warehouse_inventory (product_serial_number)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE warehouse_locations
     ADD FOREIGN KEY (location_ID)
     REFERENCES warehouse_inventory (location_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE warehouse_locations
     ADD FOREIGN KEY (location_ID)
     REFERENCES employees (location_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE customers
     ADD FOREIGN KEY (employee_ID)
     REFERENCES employees (employee_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE orders
     ADD FOREIGN KEY (invoice_ID)
     REFERENCES invoices (invoice_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE warehouse_inventory
     ADD FOREIGN KEY (location_ID)
     REFERENCES warehouse_locations (location_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE warehouse_inventory
     ADD FOREIGN KEY (product_serial_number)
     REFERENCES product_inventory (product_serial_number)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 ALTER TABLE employees
     ADD FOREIGN KEY (customer_ID)
     REFERENCES customers (customer_ID)
-    ON DELETE CASCADE
+    ON DELETE SET NULL
     ON UPDATE CASCADE;
 
 # ----------------------------------------
