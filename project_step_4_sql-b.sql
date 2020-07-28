@@ -57,7 +57,7 @@ DELETE FROM customers WHERE customer_ID = (:cust_ID);
 DELETE FROM customers WHERE order_ID = (:ord_ID);
 
 #w/h inv
-DELETE FROM warehouse_inventory WHERE location_ID = (:loc_ID);
+DELETE FROM warehouse_inventory WHERE location_ID = (:loc_ID) AND product_serial_number = (:prod_serNo);
 
 #employees
 DELETE FROM employees WHERE employee_ID = (:emp_ID);
