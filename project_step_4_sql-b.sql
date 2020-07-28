@@ -48,6 +48,18 @@ INSERT INTO warehouse_inventory (location_ID, product_serial_number)
 INSERT INTO employees (first_name, last_name, start_date_month, start_date_year, start_date_dayOfMonth, job_title, location_ID, end_date_year, end_date_month, end_date_dayOfMonth)
 VALUES (:fname, :lname, :sDate_mo, :sDate_yr, :sDate_DOM, :title, :loc_ID, :end_year, :end_mo, :end_DOM);
 
+#invoices
+INSERT INTO invoices (customer_ID, invoice_ID, employee_ID, payment_date_year, payment_date_month, payment_date_dayOfMonth, payment_amount, payment_method, invoice_amount)
+VALUES (:customer_ID, :invoice_ID, :employee_ID, :payment_date_year, :payment_date_month, :payment_date_dayOfMonth, :payment_amount, :payment_method, :invoice_amount);
+
+#product_inventory
+INSERT INTO product_inventory (product_serial_number, product_type, product_brand, product_year, product_model, product_invoice_price, product_retail_price, product_size)
+VALUES (:product_serial_number, :product_type, :product_brand, :product_year, :product_model, :product_invoice_price, :product_retail_price, :product_size);
+
+#warehouse_locations
+INSERT INTO warehouse_locations (location_ID, location_street_address, location_city, location_state, location_ZIP)
+VALUES (:location_ID, :location_street_address, :location_city, :location_state, :location_ZIP);
+
 # --------------------------------------------------------------
 # Deletes
 #Customers
