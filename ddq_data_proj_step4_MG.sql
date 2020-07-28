@@ -35,9 +35,9 @@ SET FOREIGN_KEY_CHECKS=1;
 
 # Create the table for invoices
 CREATE TABLE `invoices` (
-	`customer_ID` int(11) NOT NULL,
-	`invoice_ID` int(11) NOT NULL,
-	`employee_ID` int(11) NOT NULL,
+	`customer_ID` int(11),
+	`invoice_ID` int(11),
+	`employee_ID` int(11),
 	`payment_date_year` int(11) NOT NULL,
     `payment_date_month` int(11) NOT NULL,
     `payment_date_dayOfMonth` int(11) NOT NULL,
@@ -50,7 +50,7 @@ CREATE TABLE `invoices` (
 
 # Create table for product_inventory
 CREATE TABLE `product_inventory` (
-	`product_serial_number` int(11) NOT NULL,
+	`product_serial_number` int(11),
     `product_type` varchar(255) NOT NULL,
     `product_brand` varchar(255) NOT NULL,
     `product_year` int(11) NOT NULL,
@@ -64,11 +64,12 @@ CREATE TABLE `product_inventory` (
 
 # Create table for warehouse_locations
 CREATE TABLE `warehouse_locations` (
-	`location_ID` int(11) NOT NULL,
+	`location_ID` int(11),
     `location_street_address` varchar(255) NOT NULL,
     `location_city` varchar(255) NOT NULL,
     `location_state` varchar(255) NOT NULL,
-    `location_ZIP` int(11) NOT NULL
+    `location_ZIP` int(11) NOT NULL,
+    PRIMARY KEY (`location_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
@@ -76,7 +77,7 @@ CREATE TABLE `warehouse_locations` (
 
 # Create the table for customers
 CREATE TABLE `customers` (
-	`customer_ID` int(11) NOT NULL AUTO_INCREMENT,
+	`customer_ID` int(11),
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`email` varchar(255) NOT NULL,
@@ -102,30 +103,29 @@ CREATE TABLE `customers` (
 
 # Create table for orders
 CREATE TABLE `orders` (
-	`invoice_ID` int(11) NOT NULL,
+	`invoice_ID` int(11),
 	`order_ID` int(11) NOT NULL AUTO_INCREMENT,
 	`order_date_year` int(11) NOT NULL,
 	`order_date_month` int(11) NOT NULL,
 	`order_date_dayOfMonth` int(11) NOT NULL,
 	`order_amount` int(11) NOT NULL,
 	`order_quantity` int(11) NOT NULL,
-	`product_serial_number` int(11) NOT NULL,
+	`product_serial_number` int(11),
 	PRIMARY KEY (`order_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 # Create table for warehouse inventory
 CREATE TABLE `warehouse_inventory` (
-	`location_ID` int(11) NOT NULL,
-	`product_serial_number` int(11) NOT NULL,
-    PRIMARY KEY (`location_ID`, `product_serial_number`)
+	`location_ID` int(11),
+	`product_serial_number` int(11)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 
 
 # Create table for employees
 CREATE TABLE `employees` (
-	`employee_ID` int(11) NOT NULL AUTO_INCREMENT,
+	`employee_ID` int(11) AUTO_INCREMENT,
 	`first_name` varchar(255) NOT NULL,
 	`last_name` varchar(255) NOT NULL,
 	`start_date_year` int(11) NOT NULL,
@@ -135,7 +135,7 @@ CREATE TABLE `employees` (
 	`end_date_month` int(11),
 	`end_date_dayOfMonth`int(11),
 	`job_title` varchar(255) NOT NULL,
-	`location_ID` varchar(255) NOT NULL,
+	`location_ID` int(11),
 	PRIMARY KEY (`employee_ID`)
 )ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -158,35 +158,6 @@ CREATE TABLE `employees` (
 
 
 # -----------------------------------------
-ALTER TABLE invoices
-    ADD FOREIGN KEY (customer_ID) 
-    REFERENCES customers (customer_ID)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE;
-
-ALTER TABLE invoices
-    ADD FOREIGN KEY (employee_ID) 
-    REFERENCES employees (employee_ID)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE;
-
-ALTER TABLE product_inventory
-    ADD FOREIGN KEY (product_serial_number)
-    REFERENCES warehouse_inventory (product_serial_number)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE;
-
-ALTER TABLE warehouse_locations
-    ADD FOREIGN KEY (location_ID)
-    REFERENCES warehouse_inventory (location_ID)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE;
-
-ALTER TABLE warehouse_locations
-    ADD FOREIGN KEY (location_ID)
-    REFERENCES employees (location_ID)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE;
 
 ALTER TABLE customers
     ADD FOREIGN KEY (employee_ID)
@@ -194,28 +165,46 @@ ALTER TABLE customers
     ON DELETE SET NULL
     ON UPDATE CASCADE;
 
-ALTER TABLE orders
-    ADD FOREIGN KEY (invoice_ID)
-    REFERENCES invoices (invoice_ID)
-    ON DELETE SET NULL
-    ON UPDATE CASCADE;
-
-ALTER TABLE warehouse_inventory
-    ADD FOREIGN KEY (location_ID)
+ALTER TABLE employees
+    ADD CONSTRAINT FOREIGN KEY (location_ID)
     REFERENCES warehouse_locations (location_ID)
     ON DELETE SET NULL
     ON UPDATE CASCADE;
 
-ALTER TABLE warehouse_inventory
-    ADD FOREIGN KEY (product_serial_number)
+ALTER TABLE invoices
+    ADD CONSTRAINT FOREIGN KEY (customer_ID)
+    REFERENCES customers (customer_ID)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE;
+
+ALTER TABLE invoices
+    ADD CONSTRAINT FOREIGN KEY (employee_ID)
+    REFERENCES employees (employee_ID)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE;
+
+ALTER TABLE orders
+    ADD CONSTRAINT FOREIGN KEY (invoice_ID)
+    REFERENCES invoices (invoice_ID)
+    ON DELETE SET NULL
+    ON UPDATE CASCADE;
+
+ALTER TABLE orders
+    ADD CONSTRAINT FOREIGN KEY (product_serial_number)
     REFERENCES product_inventory (product_serial_number)
     ON DELETE SET NULL
     ON UPDATE CASCADE;
 
-ALTER TABLE employees
-    ADD FOREIGN KEY (customer_ID)
-    REFERENCES customers (customer_ID)
-    ON DELETE SET NULL
+ALTER TABLE warehouse_inventory
+    ADD CONSTRAINT FOREIGN KEY (location_ID)
+    REFERENCES warehouse_locations (location_ID)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE;
+
+ALTER TABLE warehouse_inventory
+    ADD CONSTRAINT FOREIGN KEY (product_serial_number)
+    REFERENCES product_inventory (product_serial_number)
+    ON DELETE CASCADE
     ON UPDATE CASCADE;
 
 # ----------------------------------------
@@ -227,11 +216,11 @@ INSERT INTO invoices(`customer_ID`, `invoice_ID`, `employee_ID`, `payment_date_y
 (2, 1, 2020, 3, 15, 700, 'Credit Card', 1700)
 
 # Insert data - product_inventory
-INSERT INTO procuct_inventory(`product_serial_number`, `product_type`, `product_brand`, `product_year`,
+INSERT INTO product_inventory(`product_serial_number`, `product_type`, `product_brand`, `product_year`,
 `product_model`, `product_invoice_price`, `product_retail_price`, `product_size`)VALUES
-(1234, 'Road', 'Schwinn', 2020, NULL, 1000, 1100, 21),
+(1234, 'Road', 'Schwinn', 2020, 'Cruiser', 1000, 1100, 21),
 (1010, 'Mountain', 'Santa Cruz', 2020, 'Chameleon', 3500, 3299, 27.5),
-(2345, 'Electric', 'RadRunner', 2020, NULL, 1200, 1199, 25)
+(2345, 'Electric', 'RadRunner', 2020, 'Voltage', 1200, 1199, 25)
 
 
 # Insert data - warehouse_locations
@@ -242,7 +231,7 @@ INSERT INTO warehouse_locations(`location_ID`, `location_street_address`,
 (3, '1221 24th Ave E', 'Seattle', 'WA', 98112)
 
 # ----------------------------------------
-# Select data - invocies
+# Select data - invoices
 SELECT * 
 FROM invoices;
 
@@ -258,8 +247,8 @@ SELECT *
 FROM warehouse_locations;
 
 # ----------------------------------------
-# Update data - invocies
-UPDATE invocies
+# Update data - invoices
+UPDATE invoices
 SET customer_ID = customer_ID_input, invoice_ID = invoice_ID_input, employee_ID = employee_ID_input, 
 payment_date_year = payment_date_year_input, payment_date_month = payment_date_month_input, 
 payment_date_dayOfMonth = payment_date_dayOfMonth_input, payment_amount = payment_amount_input, 
