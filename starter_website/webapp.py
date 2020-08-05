@@ -58,7 +58,7 @@ def browse_products():
     db_connection = connect_to_database()
     type_filter = request.args.get('type_filter')
 
-    if type_filter == "All":
+    if type_filter == "All" or type_filter is None:
         query = 'SELECT product_serial_number, product_type, product_brand, product_year, product_model, ' \
                 'product_invoice_price, product_retail_price, product_size from product_inventory;'
 
@@ -68,7 +68,7 @@ def browse_products():
     else:
         query = 'SELECT product_serial_number, product_type, product_brand, product_year, product_model, ' \
                 'product_invoice_price, product_retail_price, product_size from product_inventory ' \
-                'WHERE product_size = %s;'
+                'WHERE product_type = %s;'
         data = (type_filter,)
         result = execute_query(db_connection, query, data).fetchall()
 
