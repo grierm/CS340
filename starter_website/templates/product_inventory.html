@@ -19,12 +19,11 @@
     <legend><H2>Available Inventory</H2></legend>
 
     <!-- Search bar to look by type-->
-    <body onload="document.drop_down.submit()">
-    <form class="drop_down" name="drop_down" method='GET' action="product_inventory">
+    <form class="drop_down" name="drop_down" method='GET'>
         <label for="billDate">Filter Bikes By Type:</label><br>
-         <select name="type_filter">
+         <select name="type_filter" onload='this.form.submit()'>
            <optgroup label="Product Type">
-                 <option value="All" name="type_filter" selected>All</option>
+                 <option value="All" name="type_filter" selected="selected">All</option>
                  <option value="Road" name="type_filter">Road</option>
                  <option value="Mountain" name="type_filter">Mountain</option>
                  <option value="Electric" name="type_filter">Electric</option>
@@ -32,7 +31,6 @@
          </select><br>
        <input type="submit" value="Submit">
     </form>
-    </body>
     <table class="table">
         <thead>
             <th>product_serial_number</th>
