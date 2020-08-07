@@ -24,8 +24,9 @@
             <th>location_city</th>
             <th>location_state</th>
             <th>location_zip</th>
+            <!-- Remove unnecessary buttons
             <th>modify address</th>
-            <th>delete address</th>
+            <th>delete address</th> -->
         </thead>
 
         <tbody>
@@ -36,8 +37,9 @@
               <td> {{ r[2] }}</td>
               <td> {{ r[3] }}</td>
               <td> {{ r[4] }}</td>
+	      <!-- Remove unnecessary buttons
               <td> <input type='button' name='Update' value='Update' onclick="window.location = '/update_people/{{r[4]}}'"> </td>
-              <td> <input type='button' name='Delete' value='Delete' onclick="window.location = '/delete_people/{{r[4]}}'"> </td>
+              <td> <input type='button' name='Delete' value='Delete' onclick="window.location = '/delete_people/{{r[4]}}'"> </td> -->
             </tr>
             {% endfor %}
           </tbody>
