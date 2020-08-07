@@ -41,8 +41,9 @@
             <th>product_invoice_price</th>
             <th>product_retail_price</th>
             <th>product_size</th>
+            <!-- Removal of unnecessary buttons 
             <th>modify product</th>
-            <th>delete product</th>
+            <th>delete product</th> -->
         </thead>
         <tbody>
             {% for r in rows %}
@@ -55,8 +56,9 @@
               <td> {{ r[5] }}</td>
               <td> {{ r[6] }}</td>
               <td> {{ r[7] }}</td>
+              <!-- Removal of unnecessary buttons 
               <td> <input type='button' name='Update' value='Update' onclick="window.location = '/update_people/{{r[4]}}'"> </td>
-              <td> <input type='button' name='Delete' value='Delete' onclick="window.location = '/delete_people/{{r[4]}}'"> </td>
+              <td> <input type='button' name='Delete' value='Delete' onclick="window.location = '/delete_people/{{r[4]}}'"> </td> -->
             </tr>
             {% endfor %}
           </tbody>
