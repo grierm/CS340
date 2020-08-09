@@ -1,0 +1,88 @@
+<!-- Order Table Update -->
+<H1>Order Update</H1>
+<h4>Update order information</h4>
+
+<!-- Headers and references to those pages -->
+<ul>
+    <li><a href="index">Home</a></li>
+    <li><a href="customers">Customers</a></li>
+    <li><a href="Invoices">Invoices</a></li>
+    <li><a href="orders">Orders</a></li>
+    <li><a href="product_inventory">Product Inventory</a></li>
+    <li><a href="wh_inv">Warehouse Inventory</a></li>
+    <li><a href="warehouse_locations">Warehouse Locations</a></li>
+    <li><a href="employees">Employees</a></li>
+</ul>	
+
+<!-- Form to update a customer, including ID -->
+<form id="update_order" action="{{order[0]}}" method="POST">
+
+    Invoice ID:
+    <select name="invoice_id">
+                {% for inv in inv_list %}
+                <option value="{{inv[0]}}">{{ inv[0] }}</option>
+                {% endfor %}
+                <option value="NULL">NULL</option>
+            </select>
+
+    <br>
+    Order Amount: <input type="text" name="order_amt" value = "{{order[2]}}"> <br>
+    Product Serial Number:
+    <select name="prod_serNo">
+                {% for prod in prods %}
+                <option value="{{prod[0]}}">{{ prod[0] }} - {{ prod[1] }} {{ prod[2] }}</option>
+                {% endfor %}
+            </select>
+     <br>
+    <input type="submit" value="Submit">
+</form>
+
+
+<!-- This style seciton could be replaces with a style sheet or something-->
+<style>
+/* General background and table style*/
+body{
+    background-color: #F5F5F5;
+}
+
+table, td, tr, th {
+    border: solid;
+    border-width: 2px;
+}
+form {
+    border: solid;
+    border-width: 2px;
+    width: 100%
+}
+fieldset{
+    border: none;
+}
+
+/* Navigation bar style */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #B0C4DE ;
+  overflow: hidden;
+}
+
+li {
+   float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 10px 37px;
+  text-decoration: none;
+}
+
+/* Hover color*/
+li a:hover {
+  background-color: #4682B4;
+  color: white;
+}
+
+</style>

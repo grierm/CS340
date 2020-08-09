@@ -1,0 +1,166 @@
+<!-- Product Inventory Table -->
+<H1>Product Inventory</H1>
+<h4>This is what products we have available</h4>
+
+<!-- Headers and references to those pages -->
+<ul>
+    <li><a href="index">Home</a></li>
+    <li><a href="customers">Customers</a></li>
+    <li><a href="Invoices">Invoices</a></li>
+    <li><a href="orders">Orders</a></li>
+    <li><a href="product_inventory">Product Inventory</a></li>
+    <li><a href="wh_inv">Warehouse Inventory</a></li>
+    <li><a href="warehouse_locations">Warehouse Locations</a></li>
+    <li><a href="employees">Employees</a></li>
+</ul> 	
+
+<!-- Table to display invoice information -->
+<div>
+    <legend><H2>Available Inventory</H2></legend>
+
+    <!-- Search bar to look by type-->
+    <form class="drop_down" name="drop_down" method='GET'>
+        <label for="billDate">Filter Bikes By Type:</label><br>
+         <select name="type_filter" onload='this.form.submit()'>
+           <optgroup label="Product Type">
+                 <option value="All" name="type_filter" selected="selected">All</option>
+                 <option value="Road" name="type_filter">Road</option>
+                 <option value="Mountain" name="type_filter">Mountain</option>
+                 <option value="Electric" name="type_filter">Electric</option>
+           </optgroup>
+         </select><br>
+       <input type="submit" value="Submit">
+    </form>
+    <table class="table">
+        <thead>
+            <th>product_serial_number</th>
+            <th>product_type</th>
+            <th>product_brand</th>
+            <th>product_year</th>
+            <th>product_model</th>
+            <th>product_invoice_price</th>
+            <th>product_retail_price</th>
+            <th>product_size</th>
+        </thead>
+        <tbody>
+            {% for r in rows %}
+            <tr>
+              <td> {{ r.0 }}</td>
+              <td> {{ r[1] }}</td>
+              <td> {{ r[2] }}</td>
+              <td> {{ r[3] }}</td>
+              <td> {{ r[4] }}</td>
+              <td> {{ r[5] }}</td>
+              <td> {{ r[6] }}</td>
+              <td> {{ r[7] }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+</table>
+
+<br></br>
+
+<!-- Form to submit invoice information -->
+<form action="/product_inventory" method="POST">
+    <fieldset>
+        <legend>New Product Information:</legend>
+        <label>Product Serial Number:
+            <input type="number" name="product_serial_number" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Type:
+            <input type="text" name="product_type" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Brand:
+            <input type="text" name="product_brand" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Year:
+            <input type="number" name="product_year" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Model:
+            <input type="text" name="product_model" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Invoice Price:
+            <input type="number" name="product_invoice_price" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Retail Price:
+            <input type="text" name="product_retail_price" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Product Size:
+            <input type="number" name="product_size" size="30" maxlength="100">
+        </label>
+        <br>
+        <input type="submit" value="Submit Product">
+    </form>
+
+
+<!-- This style seciton could be replaces with a style sheet or something-->
+<style>
+/* General background and table style*/
+body{
+    background-color: #F5F5F5;
+}
+
+h1, h4, h2{
+    text-align: center;
+}
+
+table, td, tr, th {
+	border: solid;
+    border-width: 2px;
+}
+form {
+	border: solid;
+    border-width: 2px;
+	width: 100%
+}
+fieldset{
+    border: none;
+}
+
+/* Navigation bar style */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #B0C4DE	;
+  overflow: hidden;
+}
+
+li {
+   float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 10px 37px;
+  text-decoration: none;
+}
+
+/* Hover color*/
+li a:hover {
+  background-color: #4682B4;
+  color: white;
+}
+
+.drop_down{
+    width: 12.5%;
+}
+
+.table{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+</style>
+
+

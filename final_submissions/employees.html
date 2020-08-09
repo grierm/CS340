@@ -1,0 +1,129 @@
+<!-- Employees Table -->
+<H1>Employees</H1>
+<h4>Displays employee information</h4>
+
+<!-- Headers and references to those pages -->
+<ul>
+    <li><a href="index">Home</a></li>
+    <li><a href="customers">Customers</a></li>
+    <li><a href="Invoices">Invoices</a></li>
+    <li><a href="orders">Orders</a></li>
+    <li><a href="product_inventory">Product Inventory</a></li>
+    <li><a href="wh_inv">Warehouse Inventory</a></li>
+    <li><a href="warehouse_locations">Warehouse Locations</a></li>
+    <li><a href="employees">Employees</a></li>
+</ul>	
+
+<!-- Table to display employee information -->
+<div>
+    <legend><H2>Employees</H2></legend>
+    <table class="table">
+        <thead>
+            <th hidden>employee_ID</th>
+            <th>first_name</th>
+            <th>last_name</th>
+            <th>job_title</th>
+            <th>Location</th>
+<!-- Remove since not required
+            <th>Modify Employee</th>
+            <th>Delete Employee</th>
+        -->
+        </thead>
+
+<tbody>             
+    {% for employee in employees %}
+    <tr>
+        <td hidden>{{ employee[0] }}</td>
+        <td>{{ employee[1] }}</td>
+        <td>{{ employee[2] }}</td>
+        <td>{{ employee[3] }}</td>
+        <td>{{ employee[4] }}</td>
+<!-- Remove since not required
+        <td><button type="button" onclick="updateEmp({{ employee[0] }})">Modify</button></td>
+        <td><button type="button" onclick="deleteEmp({{ employee[0] }})">Delete</button></td>
+    -->
+    </tr>
+    {% endfor %}
+
+</tbody>
+</table>
+
+<br></br>
+
+<!-- Form to submit employee information -->
+<form id="add_emp" action="add_emp" method="POST">
+    <fieldset>
+        <legend>New Employee Information:</legend>
+        <label>First Name:
+            <input type="text" name="first_name" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Last Name:
+            <input type="text" name="last_name" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Job Title:
+            <input type="text" name="job_title" size="30" maxlength="100">
+        </label>
+        <br>
+        <label>Location:
+            <select name="location">
+                {% for loc in locations %}
+                <option value="{{loc[0]}}">{{ loc[1] }}</option>
+                {% endfor %}
+                <option value="NULL">No location</option>
+            </select>
+        </label>
+        <br>
+        <input type="submit" value="Submit Employee" onclick="submit_employee()"/>
+    </form>
+
+
+<!-- This style seciton could be replaces with a style sheet or something-->
+<style>
+/* General background and table style*/
+body{
+    background-color: #F5F5F5;
+}
+
+table, td, tr, th {
+	border: solid;
+    border-width: 2px;
+}
+form {
+	border: solid;
+    border-width: 2px;
+	width: 100%
+}
+fieldset{
+    border: none;
+}
+
+/* Navigation bar style */
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: auto;
+  background-color: #B0C4DE	;
+  overflow: hidden;
+}
+
+li {
+   float: left;
+}
+
+li a {
+  display: block;
+  color: black;
+  padding: 10px 37px;
+  text-decoration: none;
+}
+
+/* Hover color*/
+li a:hover {
+  background-color: #4682B4;
+  color: white;
+}
+
+</style>
