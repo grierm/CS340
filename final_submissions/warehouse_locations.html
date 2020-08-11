@@ -19,17 +19,17 @@
     <legend><H2>Warehouse Locations</H2></legend>
     <table class="table">
         <thead>
-            <th>location_id</th>
-            <th>location_street_address</th>
-            <th>location_city</th>
-            <th>location_state</th>
-            <th>location_zip</th>
+            <th hidden>location_id</th>
+            <th>Street Address</th>
+            <th>City</th>
+            <th>State</th>
+            <th>ZIP</th>
         </thead>
 
         <tbody>
             {% for r in rows %}
             <tr>
-              <td> {{ r.0 }}</td>
+              <td hidden> {{ r.0 }}</td>
               <td> {{ r[1] }}</td>
               <td> {{ r[2] }}</td>
               <td> {{ r[3] }}</td>
@@ -44,24 +44,20 @@
 <!-- Form to submit invoice information -->
 <form action="/warehouse_locations" method="POST">
     <fieldset>
-        <legend>New Invoice Information:</legend>
-        <label>Location ID:
-            <input type="number" name="location_ID" size="30" maxlength="100">
-        </label>
-        <br>
-        <label>Location Street Address:
+        <legend>New Location Information:</legend>
+        <label>Street Address:
             <input type="text" name="location_street_address" size="30" maxlength="100">
         </label>
         <br>
-        <label>Location City:
+        <label>City:
             <input type="text" name="location_city" size="30" maxlength="100">
         </label>
         <br>
-        <label>Location State:
+        <label>State:
             <input type="text" name="location_state" size="30" maxlength="100">
         </label>
         <br>
-        <label>Location Zip:
+        <label>ZIP:
             <input type="number" name="location_zip" size="30" maxlength="100">
         </label>
         <br>

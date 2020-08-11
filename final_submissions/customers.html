@@ -20,11 +20,12 @@
     <table class="table">
         <thead>
             <th hidden>customer_id</th>
-            <th>first_name</th>
-            <th>last_name</th>
-            <th>email</th>
-            <th>phone_number</th>
-            <th>modify customer</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Email</th>
+            <th>Phone Number</th>
+            <th>Employee ID</th>
+            <th>Edit Customer Record</th>
 <!-- Removing because not required
             <th>delete customer</th>
         -->
@@ -38,6 +39,7 @@
         <td>{{ person[2] }}</td>
         <td>{{ person[3] }}</td>
         <td>{{ person[4] }}</td>
+        <td>{{ person[5] }}</td>
         <td><button type="button" onclick="window.location='{{ url_for('update_customer', id = person[0] ) }}'" method="GET">Modify</button></td>
 <!-- Removing because we do not have delete included       
 <td><button type="button" action="deleteCustomer({{ person[0] }})">Delete</button></td>
@@ -70,6 +72,14 @@
             <input type="text" name="phone_number" size="30" maxlength="100">
         </label>
         <br>
+        Employee Tag:
+        <select name="employee_id">
+                {% for emp in emp_list %}
+                <option value="{{emp[0]}}">{{ emp[0] }} - {{ emp[1] }} {{ emp[2] }}</option>
+                {% endfor %}
+                <option value="NULL">NULL</option>
+        </select>
+        <br>
         <input type="submit" value="Submit Customer" onclick="submit_customer()"/>
     </fieldset>
 </form>
@@ -82,14 +92,18 @@ body{
     background-color: #F5F5F5;
 }
 
+h1, h4, h2{
+    text-align: center;
+}
+
 table, td, tr, th {
-	border: solid;
+    border: solid;
     border-width: 2px;
 }
 form {
-	border: solid;
+    border: solid;
     border-width: 2px;
-	width: 100%
+    width: 100%
 }
 fieldset{
     border: none;
@@ -101,7 +115,7 @@ ul {
   margin: 0;
   padding: 0;
   width: auto;
-  background-color: #B0C4DE	;
+  background-color: #B0C4DE ;
   overflow: hidden;
 }
 
@@ -120,6 +134,12 @@ li a {
 li a:hover {
   background-color: #4682B4;
   color: white;
+}
+
+.table{
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 </style>

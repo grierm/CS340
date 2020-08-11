@@ -4,14 +4,14 @@
 
 <!-- Headers and references to those pages -->
 <ul>
-    <li><a href="index">Home</a></li>
-    <li><a href="customers">Customers</a></li>
-    <li><a href="Invoices">Invoices</a></li>
-    <li><a href="orders">Orders</a></li>
-    <li><a href="product_inventory">Product Inventory</a></li>
-    <li><a href="wh_inv">Warehouse Inventory</a></li>
-    <li><a href="warehouse_locations">Warehouse Locations</a></li>
-    <li><a href="employees">Employees</a></li>
+    <li><a href="../index">Home</a></li>
+    <li><a href="../customers">Customers</a></li>
+    <li><a href="../Invoices">Invoices</a></li>
+    <li><a href="../orders">Orders</a></li>
+    <li><a href="../product_inventory">Product Inventory</a></li>
+    <li><a href="../wh_inv">Warehouse Inventory</a></li>
+    <li><a href="../warehouse_locations">Warehouse Locations</a></li>
+    <li><a href="../employees">Employees</a></li>
 </ul>	
 
 <!-- Form to update a customer, including ID -->
@@ -20,9 +20,17 @@
     Invoice ID:
     <select name="invoice_id">
                 {% for inv in inv_list %}
+                {% if inv[0] == order[1] %}
+                <option selected value="{{inv[0]}}">{{ inv[0] }}</option>
+                {% else %}
                 <option value="{{inv[0]}}">{{ inv[0] }}</option>
+                {% endif %}
                 {% endfor %}
-                <option value="NULL">NULL</option>
+                {% if not order[1] %}
+                <option selected value="NULL">No invoice</option>
+                {% else %}
+                <option value="NULL">No invoice</option>
+                {% endif %}
             </select>
 
     <br>

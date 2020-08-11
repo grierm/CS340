@@ -41,12 +41,18 @@ def customers():
     print("Customers page rendering")
     # set the db connection cursor
     cur = mysql.connection.cursor()
-    query = "SELECT customer_id, first_name, last_name, email, phone_number FROM customers;"
+    query = "SELECT customer_id, first_name, last_name, email, phone_number, employee_ID FROM customers;"
     cur.execute(query)
     result=cur.fetchall()
     print(result)
     print("query pull success")
-    return render_template('customers.html', customers = result)
+
+    # data for employee records to tie to new customer
+    query_emp = "SELECT employee_ID, first_name, last_name FROM employees;"
+    cur1 = mysql.connection.cursor()
+    cur1.execute(query_emp)
+    result_emp=cur1.fetchall()
+    return render_template('customers.html', customers = result, emp_list = result_emp)
 
 @app.route('/add_customer', methods=["GET", "POST"])
 def add_customer():
@@ -55,13 +61,24 @@ def add_customer():
     l_name = request.form["last_name"]
     email = request.form["email"]
     phone = request.form["phone_number"]
+    emp_ID = request.form["employee_id"]
     print("First name ", f_name)
 
-    query = "INSERT INTO customers (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)"
-    data = (f_name, l_name, email, phone)
     db_connection = connect_to_database()
-    execute_query(db_connection, query, data)
 
+    #check if an employee_ID was entered
+    if emp_ID == "NULL":
+        query = "INSERT INTO customers (first_name, last_name, email, phone_number) VALUES (%s, %s, %s, %s)"
+        data = (f_name, l_name, email, phone)
+        result = execute_query(db_connection, query, data)
+        print("Insert result, null emp - ", result)
+    else:
+        query = "INSERT INTO customers (first_name, last_name, email, phone_number, employee_ID) VALUES (%s, %s, %s, %s, %s)"
+        data = (f_name, l_name, email, phone, emp_ID)
+        result = execute_query(db_connection, query, data)
+        print("Insert result, NOT null emp - ", result)
+
+    print("Customer added")
     return redirect(url_for('customers'))
 
 @app.route('/update_customer/<int:id>', methods=["GET", "POST"])
@@ -70,13 +87,18 @@ def update_customer(id):
     print("Update customer start")
     if request.method == "GET":
         print("Getting customer record")
-        cust_q = "SELECT customer_ID, first_name, last_name, email, phone_number FROM customers WHERE customer_ID = %s" % (id)
+        cust_q = "SELECT customer_ID, first_name, last_name, email, phone_number, employee_ID FROM customers WHERE customer_ID = %s" % (id)
         cust_result = execute_query(db_connection, cust_q).fetchone()
 
         if cust_result == None:
             return "Could not find customer"
 
-        return render_template('customer_update.html', customer = cust_result)
+        emp_q = "SELECT employee_ID, first_name, last_name FROM employees"
+        emp_result = execute_query(db_connection, emp_q).fetchall()
+        print("Employee results for update customer")
+        print(emp_result)
+
+        return render_template('customer_update.html', customer = cust_result, emp_list = emp_result)
 
     elif request.method == "POST":
 
@@ -88,12 +110,22 @@ def update_customer(id):
         lname = request.form['last_name']
         email = request.form['email']
         phone = request.form['phone_number']
+        emp_ID = request.form['employee_id']
 
+        print("Printing form fields")
         print(request.form)
 
-        query = "UPDATE customers SET first_name = %s, last_name = %s, email = %s, phone_number = %s WHERE customer_id = %s"
-        data = (fname, lname, email, phone, cust_id)
-        result = execute_query(db_connection, query, data)
+        if emp_ID == "NULL":
+            print("User trying to set NULL employee")
+            query = """UPDATE customers SET employee_ID = NULL, first_name = %s, last_name = %s, email = %s, phone_number = %s
+            WHERE customer_id = %s"""
+            data = (fname, lname, email, phone, cust_id)
+            result = execute_query(db_connection, query, data)
+        else:
+            print("User not setting NULL employee")
+            query = "UPDATE customers SET first_name = %s, last_name = %s, email = %s, phone_number = %s, employee_ID = %s WHERE customer_id = %s"
+            data = (fname, lname, email, phone, emp_ID, cust_id)
+            result = execute_query(db_connection, query, data)
 
         print("Customer updated")
         return redirect(url_for('customers'))
@@ -196,7 +228,7 @@ def add_order():
     else:
         print("User not trying to set null")
         query = """INSERT INTO orders (invoice_ID, order_amount, product_serial_number) VALUES (%s, %s, %s)"""
-        data = (inv_ID, ord_amt, prod_serNo, ord_id)
+        data = (inv_ID, ord_amt, prod_serNo)
         result = execute_query(db_connection, query, data)
 
     print("New order added!")
@@ -272,7 +304,7 @@ def wh_inv():
     # OLD QUERY: query = "SELECT location_ID, product_serial_number FROM warehouse_inventory;"
     # NEW QUERY WITH JOIN
     query = """SELECT warehouse_inventory.location_ID, warehouse_inventory.product_serial_number, warehouse_locations.location_city, 
-    product_inventory.product_brand, product_inventory.product_model, warehouse_inventory.inventory_ID
+    product_inventory.product_brand, product_inventory.product_model, warehouse_inventory.inventory_ID, warehouse_inventory.stock_quantity
     FROM `warehouse_inventory` LEFT JOIN warehouse_locations ON warehouse_inventory.location_ID = warehouse_locations.location_ID 
     LEFT JOIN product_inventory ON warehouse_inventory.product_serial_number = product_inventory.product_serial_number;"""
     cur.execute(query)
@@ -302,10 +334,11 @@ def add_inv():
     print("Adding inventory to a location")
     loc_ID = request.form["location_ID"]
     prod_serNo = request.form["product_serial_number"]
+    prod_qty = request.form["stock_quantity"]
     print("TEST: location is ", loc_ID)
 
-    query = "INSERT INTO warehouse_inventory (location_ID, product_serial_number) VALUES (%s, %s)"
-    data = (loc_ID, prod_serNo)
+    query = "INSERT INTO warehouse_inventory (location_ID, product_serial_number, stock_quantity) VALUES (%s, %s, %s)"
+    data = (loc_ID, prod_serNo, prod_qty)
     db_connection = connect_to_database()
     execute_query(db_connection, query, data)
 
@@ -331,16 +364,22 @@ This section covers the INVOICES routing/query handling
 @app.route('/Invoices')
 def browse_invoices():
     """This function displays the invoices from Invoices.html"""
-    print("Fetching and rendering people web page")
+    print("Fetching and rendering invoices web page")
     db_connection = connect_to_database()
 
-    query = 'SELECT customer_id, invoice_id, employee_id, payment_date_year, payment_date_month, ' \
-            'payment_date_dayOfMonth, payment_amount, payment_method, invoice_amount from invoices;'
+    query = """SELECT customer_id, invoice_id, employee_id, payment_date_year, payment_date_month,
+            payment_date_dayOfMonth, payment_amount, payment_method, invoice_amount from invoices;"""
 
     result = execute_query(db_connection, query).fetchall()
     print(result)
 
-    return render_template('Invoices.html', rows=result)
+    query_emp = "SELECT employee_ID, first_name, last_name FROM employees;"
+    result_emp = execute_query(db_connection, query_emp).fetchall()
+
+    print("Employee names:")
+    print(result_emp)
+
+    return render_template('Invoices.html', rows=result, employees=result_emp)
 
 
 @app.route('/Invoices', methods=['POST'])
@@ -378,9 +417,14 @@ This section covers the PRODUCT INVENTORY routing/query handling
 @app.route('/product_inventory', methods=['GET'])
 def browse_products():
     """Display all the products and also has functionality for the drop down list."""
-    print("Fetching and rendering people web page")
+    print("Fetching and rendering product inventory web page")
     db_connection = connect_to_database()
     type_filter = request.args.get('type_filter')
+
+    # dropdown menu items pull for filter on page
+    type_q = "SELECT product_type FROM product_inventory;"
+    result_types = execute_query(db_connection, type_q).fetchall()
+    print("Bike types for dropdown: ", result_types)
 
     if type_filter == "All" or type_filter is None:
         query = """SELECT product_serial_number, product_type, product_brand, product_year, product_model,
@@ -389,7 +433,10 @@ def browse_products():
 
         result = execute_query(db_connection, query).fetchall()
         print(result)
-        return render_template('product_inventory.html', rows=result)
+        if type_filter is None:
+            type_filter = "All"
+        print("Type filter is: ", type_filter)
+        return render_template('product_inventory.html', rows=result, types=result_types, filter=type_filter)
     else:
         query = """SELECT product_serial_number, product_type, product_brand, product_year, product_model,
                 product_invoice_price, product_retail_price, product_size 
@@ -399,7 +446,8 @@ def browse_products():
         result = execute_query(db_connection, query, data).fetchall()
 
         print(result)
-        return render_template('product_inventory.html', rows=result)
+        print("Type filter is: ", type_filter)
+        return render_template('product_inventory.html', rows=result, types=result_types, filter=type_filter)
 
 
 @app.route('/product_inventory', methods=['POST'])
@@ -408,7 +456,7 @@ def add_product():
     db_connection = connect_to_database()
     print("Add new product!")
 
-    product_serial_number = request.form['product_serial_number']
+    #product_serial_number = request.form['product_serial_number']
     product_type = request.form['product_type']
     product_brand = request.form['product_brand']
     product_year = request.form['product_year']
@@ -417,11 +465,11 @@ def add_product():
     product_retail_price = request.form['product_retail_price']
     product_size = request.form['product_size']
 
-    query = """INSERT INTO product_inventory (product_serial_number, product_type, product_brand, product_year,
+    query = """INSERT INTO product_inventory (product_type, product_brand, product_year,
             product_model, product_invoice_price, product_retail_price, product_size)
-            VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
+            VALUES (%s,%s,%s,%s,%s,%s,%s)"""
 
-    data = (product_serial_number, product_type, product_brand, product_year,
+    data = (product_type, product_brand, product_year,
             product_model, product_invoice_price, product_retail_price, product_size)
     execute_query(db_connection, query, data)
 
@@ -441,8 +489,8 @@ def browse_locations():
     """Display the warehouse locations."""
     print("Fetching and rendering people web page")
     db_connection = connect_to_database()
-    query = 'SELECT location_ID, location_street_address, location_city, location_state, location_zip ' \
-            'from warehouse_locations;'
+    query = """SELECT location_ID, location_street_address, location_city, location_state, location_zip
+            from warehouse_locations;"""
     result = execute_query(db_connection, query).fetchall()
     print(result)
     return render_template('warehouse_locations.html', rows=result)
@@ -454,16 +502,16 @@ def add_new_location():
     db_connection = connect_to_database()
     print("Add new location!")
 
-    location_ID = request.form['location_ID']
+    #location_ID = request.form['location_ID']
     location_street_address = request.form['location_street_address']
     location_city = request.form['location_city']
     location_state = request.form['location_state']
     location_zip = request.form['location_zip']
 
-    query = 'INSERT INTO warehouse_locations (location_ID, location_street_address, location_city, location_state, ' \
-            'location_zip) VALUES (%s,%s,%s,%s,%s)'
+    query = """INSERT INTO warehouse_locations (location_street_address, location_city, location_state,
+            location_zip) VALUES (%s,%s,%s,%s)"""
 
-    data = (location_ID, location_street_address, location_city, location_state, location_zip)
+    data = (location_street_address, location_city, location_state, location_zip)
     execute_query(db_connection, query, data)
 
     print("Location added!")

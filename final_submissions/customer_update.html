@@ -4,14 +4,14 @@
 
 <!-- Headers and references to those pages -->
 <ul>
-    <li><a href="index">Home</a></li>
-    <li><a href="customers">Customers</a></li>
-    <li><a href="Invoices">Invoices</a></li>
-    <li><a href="orders">Orders</a></li>
-    <li><a href="product_inventory">Product Inventory</a></li>
-    <li><a href="wh_inv">Warehouse Inventory</a></li>
-    <li><a href="warehouse_locations">Warehouse Locations</a></li>
-    <li><a href="employees">Employees</a></li>
+    <li><a href="../index">Home</a></li>
+    <li><a href="../customers">Customers</a></li>
+    <li><a href="../Invoices">Invoices</a></li>
+    <li><a href="../orders">Orders</a></li>
+    <li><a href="../product_inventory">Product Inventory</a></li>
+    <li><a href="../wh_inv">Warehouse Inventory</a></li>
+    <li><a href="../warehouse_locations">Warehouse Locations</a></li>
+    <li><a href="../employees">Employees</a></li>
 </ul>	
 
 <!-- Form to update a customer, including ID -->
@@ -27,6 +27,23 @@
     Last Name: <input type="text" name="last_name" value = "{{customer[2]}}"> <br>
     Email: <input type="text" name="email" value = "{{customer[3]}}"> <br>
     Phone Number: <input type="text" name="phone_number" value = "{{customer[4]}}"> <br>
+    Employee Tag:
+    <select name="employee_id">
+                {% for emp in emp_list %}
+                {% if customer[5] == emp[0] %}
+                <option selected value="{{emp[0]}}">{{ emp[0] }} - {{ emp[1] }} {{ emp[2] }}</option>
+                {% else %} 
+                <option value="{{emp[0]}}">{{ emp[0] }} - {{ emp[1] }} {{ emp[2] }}</option>
+                {% endif %}
+                {% endfor %}
+                {% if not customer[5] %}
+                <option selected value="NULL">No employee relation</option>
+                {% else %}
+                <option value="NULL">No employee relation</option>
+                {% endif %}
+            </select>
+
+    <br>
     <input type="submit" value="Submit">
 </form>
 

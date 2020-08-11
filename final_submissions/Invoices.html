@@ -20,14 +20,14 @@
     <table class="table">
         <thead>
             <th hidden>customer_id</th>
-            <th>invoice_id</th>
-            <th>employee_id</th>
-            <th>payment_date_year</th>
-            <th>payment_date_month</th>
-            <th>payment_date_dayOfMonth</th>
-            <th>payment_amount</th>
-            <th>payment_method</th>
-            <th>invoice_amount</th>
+            <th>Invoice ID</th>
+            <th>Employee ID</th>
+            <th>Payment year</th>
+            <th>Payment month</th>
+            <th>Payment day</th>
+            <th>Payment Amount</th>
+            <th>Payment Method</th>
+            <th>Invoice Amount</th>
         </thead>
 
         <tbody>
@@ -54,8 +54,12 @@
 <form action="/Invoices" method="POST">
     <fieldset>
         <legend>New Invoice Information:</legend>
-        <label>Employee ID:
-            <input type="number" name="employee_id" size="30" maxlength="100">
+        <label>Employee Responsible:
+            <select name="employee_id">
+              {% for emp in employees %}
+              <option value="{{emp[0]}}">{{ emp[1] }} {{ emp[2] }}</option>
+              {% endfor %}
+            </select>
         </label>
         <br>
         <label>Payment Date Year:

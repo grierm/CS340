@@ -23,29 +23,38 @@
         <label for="billDate">Filter Bikes By Type:</label><br>
          <select name="type_filter" onload='this.form.submit()'>
            <optgroup label="Product Type">
-                 <option value="All" name="type_filter" selected="selected">All</option>
-                 <option value="Road" name="type_filter">Road</option>
-                 <option value="Mountain" name="type_filter">Mountain</option>
-                 <option value="Electric" name="type_filter">Electric</option>
+                {% if filter == "All" %}
+                <option value="All" name="type_filter" selected="selected">All</option>
+                {% else %}
+                <option value="All" name="type_filter">All</option>
+                {% endif %}
+              </option>
+                {% for type in types %}
+                {% if filter == type[0] %}
+                <option value="{{type[0]}}" selected="selected" name="type_filter">{{ type[0] }}</option>
+                {% else %}
+                <option value="{{type[0]}}" name="type_filter">{{ type[0] }}</option>
+                {% endif %}
+                {% endfor %}
            </optgroup>
          </select><br>
        <input type="submit" value="Submit">
     </form>
     <table class="table">
         <thead>
-            <th>product_serial_number</th>
-            <th>product_type</th>
-            <th>product_brand</th>
-            <th>product_year</th>
-            <th>product_model</th>
-            <th>product_invoice_price</th>
-            <th>product_retail_price</th>
-            <th>product_size</th>
+            <th hidden>product_serial_number</th>
+            <th>Bike Type</th>
+            <th>Brand</th>
+            <th>Model Year</th>
+            <th>Model Name</th>
+            <th>Invoice Price</th>
+            <th>Retail Price</th>
+            <th>Size</th>
         </thead>
         <tbody>
             {% for r in rows %}
             <tr>
-              <td> {{ r.0 }}</td>
+              <td hidden> {{ r.0 }}</td>
               <td> {{ r[1] }}</td>
               <td> {{ r[2] }}</td>
               <td> {{ r[3] }}</td>
@@ -64,10 +73,6 @@
 <form action="/product_inventory" method="POST">
     <fieldset>
         <legend>New Product Information:</legend>
-        <label>Product Serial Number:
-            <input type="number" name="product_serial_number" size="30" maxlength="100">
-        </label>
-        <br>
         <label>Product Type:
             <input type="text" name="product_type" size="30" maxlength="100">
         </label>
